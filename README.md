@@ -25,7 +25,7 @@ Relationships:
 - Each **Order** belongs to a **User**.
 - Each **OrderItem** belongs to an **Order** and references a **Product**.
 
-![db structure](core/db/EShop.svg)
+![db structure](core/db/graphviz.svg)
 
 ---
 
