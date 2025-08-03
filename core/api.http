@@ -3,9 +3,19 @@ GET http://localhost:8000/products/ HTTP/1.1
 ### 
 POST http://localhost:8000/products/ HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU0MjE1MjIyLCJpYXQiOjE3NTQyMTQ5MjIsImp0aSI6ImQ2MTg2MTBlZTg0NTRkZmI5MmJmZTRlZjIwN2RhYzEyIiwidXNlcl9pZCI6IjIifQ.Xiqw8ZuhKh-xEktNqr9qoTC15k912rihBfZRHZP11pU
 
 {
     "name": "TVv",
     "price": "15",
     "stock": 5
+}
+
+###
+POST http://localhost:8000/api/token/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "mmd",
+    "password": "1234qwer"
 }
