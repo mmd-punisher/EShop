@@ -1,5 +1,9 @@
 GET http://localhost:8000/products/ HTTP/1.1
 
+###
+DELETE  http://localhost:8000/products/1/ HTTP/1.1
+
+
 ### 
 POST http://localhost:8000/products/ HTTP/1.1
 Content-Type: application/json
@@ -19,3 +23,12 @@ Content-Type: application/json
     "username": "mmd",
     "password": "1234qwer"
 }
+
+###
+POST http://localhost:8000/api/token/refresh/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NDY0NjQ1NSwiaWF0IjoxNzU0NTYwMDU1LCJqdGkiOiIyZGQ4NDU0NTdiMmI0OTYwODk5ZjY5M2U0NDcxNmIyZSIsInVzZXJfaWQiOiIyIn0.FMpokFex1_u-yFXeKwvXZvdfm0W7cYa3hEm_XzllryA"
+}
+
