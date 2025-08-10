@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from api.serializers import ProductSerializer, OrderSerializer, ProductInfoSerializer
 from api.models import Product, Order
+from api.filters import ProductFilter
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import generics
@@ -13,6 +14,7 @@ from rest_framework.views import APIView
 class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.filter(stock__gt=0)
     serializer_class = ProductSerializer
+    filterset_class = ProductFilter
 
     def get_permissions(self):
         self.permission_classes = [AllowAny]
@@ -28,7 +30,7 @@ class ProductDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_permissions(self):
         self.permission_classes = [AllowAny]
-        if self.request.method in ['PUT', 'PATCH', 'DELETE']:
+        if self.request.method in ["PUT", "PATCH", "DELETE"]:
             self.permission_classes = [IsAdminUser]
         return super().get_permissions()
 
