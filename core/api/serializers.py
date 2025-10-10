@@ -19,9 +19,9 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    product_name = serializers.CharField(source="product.name")
+    product_name = serializers.CharField(source="product.name", read_only=True)
     product_price = serializers.DecimalField(
-        max_digits=10, decimal_places=2, source="product.price"
+        max_digits=10, decimal_places=2, source="product.price", read_only=True
     )
 
     class Meta:
@@ -34,13 +34,20 @@ class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True, read_only=True)
     total_price = serializers.SerializerMethodField(method_name="total")
 
-    def total(elf, obj):
+    def total(self, obj):
         order_items = obj.items.all()
         return sum(order_item.item_subtotal for order_item in order_items)
 
     class Meta:
         model = Order
-        fields = ("order_id", "user", "created_at", "status", "items", "total_price")
+        fields = (
+            "order_id",
+            "created_at",
+            "user",
+            "status",
+            "items",
+            "total_price",
+        )
 
 
 class ProductInfoSerializer(serializers.Serializer):
