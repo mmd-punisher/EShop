@@ -11,12 +11,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from api.filters import InStockFilterBackend, OrderFilter, ProductFilter
-from api.models import Order, Product
+from api.models import Order, Product, User
 from api.serializers import (
     OrderSerializer,
     ProductInfoSerializer,
     ProductSerializer,
     OrderCreateSerializer,
+    UserSerializer,
 )
 
 
@@ -89,22 +90,6 @@ class OrderViewSet(viewsets.ModelViewSet):
     #     return Response(serializer.data)
 
 
-# class OrderListAPIView(generics.ListAPIView):
-#     queryset = Order.objects.prefetch_related("items__product")
-#     serializer_class = OrderSerializer
-
-
-# class UserOrderListAPIView(generics.ListAPIView):
-#     queryset = Order.objects.prefetch_related("items__product")
-#     serializer_class = OrderSerializer
-#     permission_classes = [IsAuthenticated]
-
-#     def get_queryset(self):
-#         user = self.request.user
-#         qs = super().get_queryset()
-#         return qs.filter(user=user)
-
-
 class ProductInfoAPIView(APIView):
     def get(self, request):
         products = Product.objects.all()
@@ -116,3 +101,9 @@ class ProductInfoAPIView(APIView):
             }
         )
         return Response(serializer.data)
+
+
+class UserListView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    pagination_class = None
