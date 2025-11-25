@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-
+from django.views.decorators.vary import vary_on_headers
 from api.filters import InStockFilterBackend, OrderFilter, ProductFilter
 from api.models import Order, Product, User
 from api.serializers import (
@@ -70,6 +70,11 @@ class OrderViewSet(viewsets.ModelViewSet):
     filterset_class = OrderFilter
     filter_backends = [DjangoFilterBackend]
     permission_classes = [IsAuthenticated]
+
+    @method_decorator(cache_page(60 * 15, key_prefix="product_list"))
+    @method_decorator(vary_on_headers("Authorization"))
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
